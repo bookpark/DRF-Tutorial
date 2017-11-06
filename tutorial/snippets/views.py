@@ -30,16 +30,19 @@ def snippet_list(request):
 
 @csrf_exempt
 def snippet_detail(request, pk):
+    # pk에 해당하는 Snippet이 존재하는지 확인 후 snippet 변수에 할당
     try:
         snippet = Snippet.objects.get(pk=pk)
     except Snippet.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':
+        # GET 요청시에는 snippet을 serialize한 결과를 보여줌
         serializer = SnippetSerializer(snippet)
         return JsonResponse(serializer.data)
 
     elif request.method == 'PUT':
+        # PUT 요청시에는 전달 된 데이터를 이용해서 snippet 인스턴스의 내용을 변경
         data = JSONParser().parse(request)
         serializer = SnippetSerializer(snippet, data=data)
         if serializer.is_valid():
@@ -48,5 +51,6 @@ def snippet_detail(request, pk):
         return JsonResponse(serializer.erros, status=400)
 
     elif request.method == 'DELETE':
+        # DELETE 요청시에는 해당 Snippet 인스턴스를 삭제
         snippet.delete()
         return HttpResponse(status=204)
