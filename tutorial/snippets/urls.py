@@ -18,5 +18,5 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    url(r'^snippets/$', views.snippet_list, name='snippet_list'),
+    url(r'^$', views.snippet_list, name='snippet_list'),
 ]
