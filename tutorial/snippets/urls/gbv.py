@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from ..views.gbv import SnippetList, SnippetDetail
+from ..views.gbv import SnippetList, SnippetDetail, UserList, UserDetail
 
 urlpatterns = [
     url(r'^$', SnippetList.as_view(), name='snippet_list'),
     url(r'^(?P<pk>\d+)/$', SnippetDetail.as_view(), name='snippet_detail'),
+    url(r'^users/$', UserList.as_view(), name='user_list'),
+    url(r'^users/(?P<pk>\d+)/$', UserDetail.as_view(), name='user_detail'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
