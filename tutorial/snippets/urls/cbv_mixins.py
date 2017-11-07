@@ -13,13 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
 
-from . import fbv, cbv, cbv_mixins, gbv
+from ..views.cbv_mixins import SnippetList, SnippetDetail
 
 urlpatterns = [
-    url(r'^fbv/', include(fbv, namespace='fbv')),
-    url(r'^cbv/', include(cbv, namespace='cbv')),
-    url(r'^cbv_mixins/', include(cbv_mixins, namespace='cbv_mixins')),
-    url(r'^gbv/', include(gbv, namespace='gbv')),
+    url(r'^$', SnippetList.as_view(), name='snippet_list'),
+    url(r'^(?P<pk>\d+)/$', SnippetDetail.as_view(), name='snippet_detail'),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
